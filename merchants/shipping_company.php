@@ -80,6 +80,7 @@ $shipping_companies = $con->query("SELECT * FROM shipping_company");
             $shipping_company = $_POST['shipping_company'];
             $sql = "UPDATE merchant SET  shipping_company_id='$shipping_company' WHERE merchant_id='$merchant_id'";
             $result = $con->exec($sql);
+            
             echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-green-500 " role="alert">
                                         <div class="ml-3 text-xl font-medium">
                                                     تم اختيار شركة الشحن !
