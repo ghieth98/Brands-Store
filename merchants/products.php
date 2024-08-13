@@ -1,5 +1,4 @@
 <?php
-ob_start();
 session_start();
 if (!(isset($_SESSION['email']))) {
     header('Location:../login.php');
@@ -45,8 +44,7 @@ $merchant_id = $_SESSION['merchant_id'];
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
                     <li>
                         <a href="../logout.php"
-                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل
-                            الخروج</a>
+                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل الخروج</a>
                     </li>
                     <li>
                         <a href="return_order.php"
@@ -98,9 +96,6 @@ $merchant_id = $_SESSION['merchant_id'];
                         <a href="add_product.php" class="bg-viridian-green-500 mt-3 mb-3 px-8 py-3 border border-viridian-green-500 text-white font-medium
                     rounded-md hover:bg-transparent hover:text-viridian-green-500">اضف منتج</a>
 
-                        <a href="shipping_company.php" class="bg-viridian-green-500 mt-3 mb-3 px-8 py-3 border border-viridian-green-500 text-white font-medium
-                    rounded-md hover:bg-transparent hover:text-viridian-green-500">اختر شركة الشحن</a>
-
                         <label for="getName" class="sr-only">Search</label>
                         <div class="relative mb-3 text-right">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -113,6 +108,7 @@ $merchant_id = $_SESSION['merchant_id'];
                             <input type="text" id="getName"
                                    class="block p-2 pl-10 text-sm text-right text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="... ابحث هنا">
+
                         </div>
 
 

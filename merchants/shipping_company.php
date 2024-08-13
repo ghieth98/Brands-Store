@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 if (!(isset($_SESSION['email']))) {
     header('Location:../login.php');
@@ -6,6 +7,9 @@ if (!(isset($_SESSION['email']))) {
 include "../connection.php";
 
 $merchant_id = $_SESSION['merchant_id'];
+$query = $con->query("SELECT merchant_id, fees FROM  merchant WHERE merchant_id='$merchant_id'");
+$query->execute();
+$merchant = $query->fetch();
 $shipping_companies = $con->query("SELECT * FROM shipping_company");
 ?>
 <!doctype html>
@@ -76,11 +80,12 @@ $shipping_companies = $con->query("SELECT * FROM shipping_company");
 
     <div class="flex flex-col flex-1 w-full">
         <?php
-        if (isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $shipping_company = $_POST['shipping_company'];
-            $sql = "UPDATE merchant SET  shipping_company_id='$shipping_company' WHERE merchant_id='$merchant_id'";
+            $fees = $_POST['fees'];
+            $sql = "UPDATE merchant SET  shipping_company_id='$shipping_company', fees='$fees'  WHERE merchant_id='$merchant_id'";
             $result = $con->exec($sql);
-            
+
             echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-green-500 " role="alert">
                                         <div class="ml-3 text-xl font-medium">
                                                     تم اختيار شركة الشحن !
@@ -92,8 +97,7 @@ $shipping_companies = $con->query("SELECT * FROM shipping_company");
                                             </svg>
                                         </button>
                                      </div>';
-
-
+            header('Refresh:1');
         }
         ?>
 
@@ -113,19 +117,22 @@ $shipping_companies = $con->query("SELECT * FROM shipping_company");
                                 <label for="shipping_company"
                                        class="block mb-2 text-sm font-medium text-gray-900 ">شركة الشحن</label>
                                 <select dir="rtl" type="text" name="shipping_company" id="shipping_company"
-                                        class="bg-gray-50 text-right border border-gray-300 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"  >
+                                        class="bg-gray-50 text-right border border-gray-300 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5">
                                     <?php
                                     foreach ($shipping_companies as $shipping_company) :?>
-                                        <option value="<?php echo $shipping_company['shipping_company_id'] ?>"><?php echo $shipping_company['name']; ?></option>
+                                        <option value="<?php echo $shipping_company['shipping_company_id'] ?>">
+                                            <?php echo $shipping_company['name']; ?>
+                                            <?php echo ' | رسوم الشحن ' . '(' . $shipping_company['shipping_fees'] . ' SAR' . ')' ?>
+                                        </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="flex flex-col items-end">
                                 <label for="fees"
                                        class="block mb-2 text-sm font-medium text-gray-900 ">رسوم الشحن</label>
-                                <input type="number" name="fees" id="fees"
+                                <input type="number" name="fees" id="fees" value="<?php echo $merchant['fees']?>"
                                        class="bg-gray-50 text-right border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
-                                       required="">
+                                       required>
                             </div>
 
                             <div class="mt-5">

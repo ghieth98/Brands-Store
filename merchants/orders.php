@@ -5,12 +5,11 @@ if (!(isset($_SESSION['email']))) {
     header('Location:../login.php');
 }
 include "../connection.php";
-
 $merchant_id = $_SESSION['merchant_id'];
 ?>
 
 <!doctype html>
-<html lang="ar">
+<html lang="ar" x-data="data()">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -46,8 +45,7 @@ $merchant_id = $_SESSION['merchant_id'];
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
                     <li>
                         <a href="../logout.php"
-                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل
-                            الخروج</a>
+                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل الخروج</a>
                     </li>
                     <li>
                         <a href="return_order.php"
@@ -120,149 +118,62 @@ $merchant_id = $_SESSION['merchant_id'];
 
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
                         <tr>
-                            <th scope="col" class="p-4"></th>
-                            <th scope="col" class="text-center py-3 "></th>
-                            <th scope="col" class="text-center py-3 "></th>
-                            <th scope="col" class="text-center py-3 "></th>
-                            <th scope="col" class="text-center py-3 "></th>
-                            <th scope="col" class="text-center py-3">
-                                تاريخ الطلب
+                            <th scope="col" class="p-4">
+                            </th>
+                            <th scope="col" class="text-center py-3 ">
+
+                            </th><th scope="col" class="text-center py-3 ">
+
                             </th>
                             <th scope="col" class="text-center py-3">
-                                المبلغ الإجمالي
+                                الحالة
+                            </th>
+                            <th scope="col" class="text-center py-3">
+                                السعر
                             </th>
 
                             <th scope="col" class=" py-3 text-center">
-                                العنوان
-                            </th>
-
-                            <th scope="col" class=" py-3 text-center">
-                                اسم العميل
+                                وصف
                             </th>
                             <th scope="col" class=" py-3 text-center">
-                                رقم الفاتورة
+                                صورة
+                            </th>
+                            <th scope="col" class=" py-3 text-center">
+                                اسم الطلب
                             </th>
                         </tr>
                         </thead>
 
                         <tbody id="showdata">
                         <?php
-                        $orders = $con->query("SELECT DISTINCT op.order_id , order_status, date, total_price, district, city, street, name,shipping_price
-                                                    FROM order_product op
-                                                    JOIN brands.orders o ON o.order_id = op.order_id
-                                                    JOIN brands.customer u ON u.customer_id = o.customer_id
-                                                    JOIN brands.product p ON p.product_id = op.product_id
-                                                    WHERE merchant_id = '$merchant_id'");
+                        $orders = $con->query("SELECT * FROM orders join brands.product p on p.product_id = orders.product_id WHERE merchant_id='$merchant_id'");
                         foreach ($orders as $order):?>
-
                             <?php
-                            if (isset($_POST['submit'])) {
+                            if (isset($_POST['submit'])){
                                 $order_status = $_POST['order_status'];
                                 $order_id = $_POST['order_id'];
                                 $sql = "UPDATE orders SET order_status='$order_status' WHERE order_id='$order_id'";
                                 $result = $con->exec($sql);
-
-                                $query = $con->query("SELECT email, name FROM shipping_company JOIN brands.orders o on shipping_company.shipping_company_id = o.shipping_company_id where order_id='$order_id'");
-                                $query->execute();
-                                $shipping = $query->fetch();
-
-                                require_once "../mail.php";
-                                // Require PHPMailer
-                                $mail = requirePHPMailer();
-
-                                $mail->setFrom('', 'Acceptance for your application for Saudi Brand Application');
-                                $mail->addAddress($shipping['email']);
-
-                                $mail->isHTML(true);
-                                $mail->Subject = "Saudi Brand shipment";
-                                // Start building the email body
-                                $mailBody = "
-                                    <body class='font-sans'>
-                                        <p class='text-lg'>عزيزي، " . $shipping['name'] . "</p>
-                                        <h3 class='text-2xl font-bold mt-4'>
-                                            طلبية شحن
-                                        </h3>";
-
-                                // Iterate over the products
-                                $productQuery = $con->query("SELECT product_name, order_quantity FROM order_product JOIN brands.product p ON p.product_id = order_product.product_id WHERE order_product.order_id='$order_id'");
-                                $products = $productQuery->fetchAll();
-                                $mailBody .= "<ul class='mt-4 text-lg'>";
-                                foreach ($products as $product) {
-                                    $mailBody .= "<li>" . $product['product_name'] . " - الكمية: " . $product['order_quantity'] . "</li>";
-                                }
-                                $mailBody .= "</ul>";
-
-                                // Continue building the email body
-                                $mailBody .= "
-                                        <h4 class='text-4xl font-bold mt-4 p-4'>
-                                           اسم العميل:  " . $order['name'] . "  <br> 
-                                             سعر الشحن: " . $order['shipping_price'] . " SAR <br> 
-                                             سعر الكلي: " . $order['total_price'] . " SAR <br> 
-                                           اخر موعد للتسليم:  " . date('H:i Y-M-D', strtotime($order['date'] . ' +3 days')) . "<br> 
-                                         العنوان:    " . $order['district'] . ',' . $order['city'] . ',' . $order['street'] . " 
-                                        </h4>
-                                        <br><br>
-                                        <p class='mt-4'>مع أطيب التحيات،</p>
-                                        <b class='text-lg'>منصة سعودي براند</b>
-                                ";
-
-                                $mail->Body = $mailBody;
-
-                                if ($mail->send()) {
-                                    echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-green-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-                                                    تم ارسال الطلب الي شركة الشحن بنجاح !
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-green-500 text-white rounded-lg focus:ring-2 focus:ring-green-500 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-                                    header("Refresh:0");
-                                } else {
-                                    echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-حدثت مشكلة !                                                
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-                                    header("Refresh:0");
-
-                                }
+                                header('Location: orders.php');
                             }
                             ?>
                             <tr class="bg-white border-b hover:bg-gray-50 ">
                                 <td class="w-4 p-4"></td>
                                 <td class="text-center py-4"></td>
                                 <td class="text-center py-4">
-                                    <a class="bg-green-500 text-white border border-viridian-green-500 rounded-md hover:bg-transparent hover:text-viridian-green-500 font-medium text-sm px-5 py-2.5 inline-flex items-center"
-                                       href="order_product.php?order_id=<?php echo $order['order_id'] ?>">
-                                        بيانات الطلب
-                                    </a>
-                                </td>
-                                <td class="text-center py-4">
-                                    <?php if ($order['order_status'] == 'قيد الانتظار'): ?>
-                                        <form method="post">
-                                            <input value="قيد التنفيذ" name="order_status" id="order_status"
-                                                   type="hidden">
-                                            <input type="hidden" name="order_id"
-                                                   value="<?php echo $order['order_id'] ?>">
-                                            <button name="submit"
-                                                    class="bg-green-500 text-white border border-viridian-green-500 rounded-md hover:bg-transparent hover:text-viridian-green-500 font-medium text-sm px-5 py-2.5 inline-flex items-center"
-                                                    type="submit">
-                                                تغيير الحالة
+                                    <?php if ($order['order_status'] == 'قيد الانتظار'):  ?>
+                                    <form method="post" >
+                                        <input value="قيد التنفيذ" name="order_status" id="order_status" type="hidden">
+                                        <input type="hidden" name="order_id" value="<?php echo $order['order_id'] ?>">
+                                        <button name="submit"
+                                                class="bg-green-500 text-white border border-viridian-green-500 rounded-md hover:bg-transparent hover:text-viridian-green-500 font-medium text-sm px-5 py-2.5 inline-flex items-center"
+                                                type="submit">
+                                            تغيير الحالة
 
-                                            </button>
-                                        </form>
-                                    <?php else: ?>
-                                    <?php endif; ?>
+                                        </button>
+                                    </form>
+                                    <?php else:  ?>
+                                    <?php endif;  ?>
 
                                     <!-- Dropdown menu -->
 
@@ -273,31 +184,30 @@ $merchant_id = $_SESSION['merchant_id'];
                                             </span>
                                 </td>
 
+
                                 <td class="text-center py-4 font-bold">
-                                    <?php echo date('i:H Y-M-d', strtotime($order['date'])) ?>
-                                </td>
-                                <td class="text-center py-4 font-bold">
-                                    <?php echo $order['total_price'] ?> SAR
+                                    <?php echo $order['price'] ?> SAR
                                 </td>
 
                                 <td class="text-center  py-4 font-bold">
                                     <?php
-                                    echo $order['district'] . ',' . $order['city'] . ',' . $order['street']
+                                    echo substr($order['description'], 0, 100)
                                     ?>
                                 </td>
-
                                 <td class="text-center py-4">
-                                    <?php
-                                    echo $order['name']
-                                    ?>
+                                    <div class="flex flex-col items-center">
+                                        <img src="../assets/uploads/<?php echo $order['image'] ?>" alt="product image"
+                                             class=" w-20 rounded">
+                                    </div>
                                 </td>
                                 <td class="text-center py-4 font-bold">
                                     <?php
-                                    echo $order['order_id']
+                                    echo $order['product_name']
                                     ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+
 
                         </tbody>
 

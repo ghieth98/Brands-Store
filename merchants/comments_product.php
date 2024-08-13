@@ -7,7 +7,7 @@ if (!(isset($_SESSION['email']))) {
 $merchant_id = $_SESSION['merchant_id'];
 include "../connection.php";
 $product_id = isset($_GET['product_id']) && is_numeric($_GET['product_id']) ? intval($_GET['product_id']) : 0;
-$comments = $con->query("SELECT * FROM comment LEFT JOIN brands.customer u on comment.customer_id = u.customer_id WHERE product_id='$product_id'");
+$comments = $con->query("SELECT * FROM comment LEFT JOIN brands.user u on comment.user_id = u.user_id WHERE product_id='$product_id'");
 $comment_count = $comments->rowCount();
 
 ?>
