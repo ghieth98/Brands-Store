@@ -45,7 +45,7 @@ $success_msg[] = 'برجاء الرجوع الي رسائل الايميل لل�
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>سعودي براند</title>
+    <title></title>
 </head>
 <body>
 <section class="bg-gray-50">
@@ -85,14 +85,14 @@ $success_msg[] = 'برجاء الرجوع الي رسائل الايميل لل�
 <footer class="bg-viridian-green-200 inset-x-0 bottom-0 mt-3 shadow-lg rounded">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="block text-sm text-right text-gray-500 sm:text-center dark:text-gray-400"> 2023 © <span>جميع الحقوق محفوظة</span> سعودي براند</span>
+            <span class="block text-sm text-right text-gray-500 sm:text-center dark:text-gray-400"> 2023 © <span>جميع الحقوق محفوظة</span> متجر براند</span>
 
             <div class="flex flex-col items-end">
                 <a href="index.php">
                     <div class="flex flex-row items-center ">
-                        <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">سعودي براند</span>
+                        <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">متجر براند</span>
                         <div class="flex">
-                            <img src="assets/images/logo.png" alt="logo" class="h-28">
+                            
                         </div>
                     </div>
                 </a>

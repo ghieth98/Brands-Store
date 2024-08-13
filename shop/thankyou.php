@@ -21,7 +21,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>سعودي براند</title>
+    <title>متجر براند</title>
 </head>
 <body class="bg-gray-50">
 <?php $success_msg[] = 'تم الطلب بنجاح' ?>
@@ -33,7 +33,7 @@ $order = $query->fetch();
 ?>
 <div dir="rtl" class="h-screen flex flex-col items-center justify-center">
     <div class="bg-white border rounded-lg shadow-lg px-6 py-8 max-w-md mx-auto mt-8">
-        <h1 class="font-bold text-2xl my-4 text-center text-green-600">سعودي براند</h1>
+        <h1 class="font-bold text-2xl my-4 text-center text-green-600">متجر براند</h1>
         <hr class="mb-2">
         <div class="flex justify-between mb-6">
             <h1 class="text-lg font-bold">فاتورة</h1>

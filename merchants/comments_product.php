@@ -26,7 +26,7 @@ $comment_count = $comments->rowCount();
           rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <title>سعودي براند</title>
+    <title>متجر براند</title>
 </head>
 <body>
 
@@ -67,9 +67,9 @@ $comment_count = $comments->rowCount();
             <div class="flex flex-col items-end">
                 <a href="../index.php">
                     <div class="flex flex-row items-center ">
-                        <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">سعودي براند</span>
+                        <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">متجر براند</span>
                         <div class="flex">
-                            <img src="../assets/images/logo.png" alt="logo" class="h-28">
+                            
                         </div>
                     </div>
                 </a>

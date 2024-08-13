@@ -19,7 +19,7 @@ if (!(isset($_SESSION['email']))) {
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script src="./assets/js/init-alpine.js"></script>
-    <title>سعودي براند</title>
+    <title>متجر براند</title>
 </head>
 <body>
 
@@ -65,9 +65,9 @@ if (!(isset($_SESSION['email']))) {
             <div class="flex flex-col items-end">
                 <a href="../index.php">
                     <div class="flex flex-row items-center ">
-                        <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">سعودي براند</span>
+                        <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">متجر براند</span>
                         <div class="flex">
-                            <img src="../assets/images/logo.png" alt="logo" class="h-28">
+                            
                         </div>
                     </div>
                 </a>
@@ -124,14 +124,14 @@ if (!(isset($_SESSION['email']))) {
                 $mail->Subject = "Your entry request for Saudi Brand Application";
                 $mail->Body = "<p class='text-lg'>عزيزي ,   " . $_POST['name'] . " </p> 
                 <h3>
-                    نحن نسعد بإعلامك بأنه تم اضافتك الي منصة سعودي براند و أن معلوماتك هي.
+                    نحن نسعد بإعلامك بأنه تم اضافتك الي منصة متجر براند و أن معلوماتك هي.
                 </h3>
                 <h4>
                     " . $_POST['email'] . "  <br>
                 </h4>
                 <br><br>
                 <p>مع أطيب التحيات, </p>
-                <b>منصة سعودي براند</b>";
+                <b>منصة متجر براند</b>";
                 if ($mail->send()) {
                     echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-green-500 " role="alert">
                                         <div class="ml-3 text-xl font-medium">

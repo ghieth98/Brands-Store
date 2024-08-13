@@ -21,7 +21,7 @@ if (!(isset($_SESSION['email']))) {
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 
         <script src="../assets/js/init-alpine.js"></script>
-        <title>سعودي براند</title>
+        <title>متجر براند</title>
     </head>
     <body>
     <div class=" bg-gray-50 h-screen">
@@ -70,7 +70,7 @@ if (!(isset($_SESSION['email']))) {
                 <div class="flex flex-col items-end">
                     <a href="../../index.php">
                         <div class="flex flex-row items-center ">
-                            <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">سعودي براند</span>
+                            <span class="self-center text-2xl text-viridian-green-600 font-semibold whitespace-nowrap">متجر براند</span>
                             <div class="flex">
                                 <img src="../../assets/images/logo.png" alt="logo" class="h-28">
                             </div>
@@ -106,7 +106,7 @@ if (!(isset($_SESSION['email']))) {
 نحن نقدر اهتمامك بالانضمام إلى منصتنا، ولكن هناك عدة عوامل قد أدت إلى اتخاذ قرار رفض طلبك. يرجى ملاحظة أننا نحتفظ بحق رفض البائعين بناءً على معاييرنا الداخلية واحتياجات المنصة في الوقت الحالي.</h4>
                 <br><br>
                 <p> مع أطيب التحيات,</p>
-                <b>منصة سعودي براند</b>";
+                <b>منصة متجر براند</b>";
                 if ($refuse_mail->send()) {
                     $stmt = $con->prepare("DELETE FROM merchant WHERE merchant_id= :id");
 
