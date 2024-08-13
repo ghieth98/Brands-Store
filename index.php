@@ -2,9 +2,9 @@
 ob_start();
 session_start();
 include "connection.php";
-if (isset($_SESSION['customer_id'])) {
+if (isset($_SESSION['user_id'])) {
 
-    $customer_id = $_SESSION['customer_id'];
+    $user_id = $_SESSION['user_id'];
 }
 if (isset($_SESSION['merchant_id'])) {
 
@@ -42,9 +42,9 @@ $products = $con->query("SELECT * FROM product  JOIN merchant ON product.merchan
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
         <div class="flex flex-col md:flex-row items-center">
-            <?php if (isset($customer_id)): ?>
+            <?php if (isset($user_id)): ?>
                 <div class="md:ml-4 mt-3 md:mt-0">
-                    <a href="customers/profile.php">
+                    <a href="users/profile.php">
                         <img src="assets/images/profile-user.png" alt="profile image"
                              class="-mt-px w-5 h-5 text-gray-800">
                     </a>
@@ -115,7 +115,7 @@ $products = $con->query("SELECT * FROM product  JOIN merchant ON product.merchan
         </button>
         <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
             <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
-                <?php if (isset($customer_id) || isset($merchant_id) || isset($admin_id) || isset($shipping_company_id)): ?>
+                <?php if (isset($user_id) || isset($merchant_id) || isset($admin_id) || isset($shipping_company_id)): ?>
                     <li>
                         <a href="logout.php"
                            class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل

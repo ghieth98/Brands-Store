@@ -13,6 +13,6 @@ function requirePHPMailer(): PHPMailer
     $mail->SMTPSecure = 'tls';
     //Our Credentials
     $mail->Username = '';
-    $mail->Password = '';// Password from Google
-    return $mail;
+    $mail->Password = '';
+    return $mail;  // Password from Google
 }

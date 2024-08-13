@@ -6,15 +6,15 @@ if (isset($_POST['submit'])){
 $otp = $_POST['otp'];
 $email = $_SESSION['email'];
 if ($otp == $_SESSION['otp']) {
-    $customer_sql = $con->prepare("SELECT * FROM customer WHERE email='$email'");
-    $customer_result = $customer_sql->execute();
-    $customer = $customer_sql->fetch();
-    $customer_count = $customer_sql->rowCount();
-    if ($customer_count > 0) {
-        $_SESSION['customer_id'] = $customer['customer_id'];
-        $_SESSION['email'] = $customer['email'];
+    $user_sql = $con->prepare("SELECT * FROM user WHERE email='$email'");
+    $user_result = $user_sql->execute();
+    $user = $user_sql->fetch();
+    $user_count = $user_sql->rowCount();
+    if ($user_count > 0) {
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['email'] = $user['email'];
         unset($_SESSION['otp']);
-        header("Location: customers/profile.php");
+        header("Location: users/profile.php");
     }
 } else {
     echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">

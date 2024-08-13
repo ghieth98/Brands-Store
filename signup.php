@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
     $street = $_POST['street'];
     $neighborhood = $_POST['neighborhood'];
 //Query user table for email
-    $email_query = $con->query("SELECT * FROM customer WHERE email='$email'");
+    $email_query = $con->query("SELECT * FROM user WHERE email='$email'");
     $users_emails = $email_query->fetchAll();
     $emails_count = $email_query->rowCount();
 //validate function
@@ -212,32 +212,6 @@ if (isset($_POST['submit'])) {
             }
 
         }
-    } elseif (strlen($password) <= 8) {
-        echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-كلمة السر يجب ان تكون اكثر من 8 حروف!                                                
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-
-    } elseif (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).*$/', $password)) {
-        echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-يجب أن تحتوي كلمة المرور على حرف واحد على الأقل، رقم واحد على الأقل، ورمز واحد على الأقل!                                                
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-
     } elseif ($password !== $confirm_password) {
         echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
                                         <div class="ml-3 text-xl font-medium">
@@ -251,22 +225,9 @@ if (isset($_POST['submit'])) {
                                         </button>
                                      </div>';
 
-    } elseif (!preg_match('/^05\d{8}$/', $phone)){
-        echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-رقم الهاتف غير مسموح!                                                
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-
     } else {
         //Insert into user database
-        $sql = "INSERT INTO customer (name, email, password, phone_number, district, city, street) VALUES ('$name', '$email', '$password', '$phone', '$neighborhood', '$city', '$street')";
+        $sql = "INSERT INTO user (name, email, password, phone_number, district, city, street) VALUES ('$name', '$email', '$password', '$phone', '$neighborhood', '$city', '$street')";
         $result = $con->exec($sql);
 
         $otp = rand(100000, 999999);

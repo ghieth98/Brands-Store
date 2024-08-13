@@ -3,9 +3,9 @@ ob_start();
 session_start();
 include "connection.php";
 $categories = $con->query("SELECT * FROM category");
-if (isset($_GET['message'])){
-$success_msg[] = 'تم تغيير كلمة السر';
-}elseif (isset($_GET['merchant'])){
+if (isset($_GET['message'])) {
+    $success_msg[] = 'تم تغيير كلمة السر';
+} elseif (isset($_GET['merchant'])) {
     $success_msg[] = 'برجاء الانتظار حتي يتم تأكيد طلبك';
 
 }
@@ -147,12 +147,11 @@ $success_msg[] = 'تم تغيير كلمة السر';
 <?php
 if (isset($_POST['email']) && isset($_POST['password'])) {
 
-    function validate($data)
+    function validate($data): string
     {
         $data = trim($data);
         $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
+        return htmlspecialchars($data);
     }
 
     $email = validate($_POST['email']);
@@ -172,11 +171,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $merchant_result = $merchant_sql->execute(array($email, base64_encode($password)));
     $merchant = $merchant_sql->fetchAll();
     $merchant_count = $merchant_sql->rowCount();
-
-    $shipping_company_sql = $con->prepare("SELECT * FROM shipping_company WHERE email=? AND password=?");
-    $shipping_company_result = $shipping_company_sql->execute(array($email, base64_encode($password)));
-    $shipping_company = $shipping_company_sql->fetchAll();
-    $shipping_company_count = $shipping_company_sql->rowCount();
 
 
     if (empty($email)) {
@@ -252,18 +246,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         $_SESSION['password'] = base64_decode($item['password']);
                         header("Location: merchants/products.php");
                     }
-                }
-            }
-            $con = null;
-        } elseif ($shipping_company_count > 0) {
-            foreach ($shipping_company as $item) {
-                if ($item['email'] === $email && base64_decode($item['password']) === $password) {
-
-                    $_SESSION['shipping_company_id'] = $item['shipping_company_id'];
-                    $_SESSION['email'] = $item['email'];
-                    $_SESSION['password'] = base64_decode($item['password']);
-                    header("Location: shipping_company/orders.php");
-
                 }
             }
             $con = null;

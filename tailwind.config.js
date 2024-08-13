@@ -6,7 +6,7 @@ module.exports = {
         "./merchants/**/*.{php,js}",
         "./admin/**/*.{php,js}",
         "./shop/**/*.{php,js}",
-        "./customers/**/*.{php,js}",
+        "./users/**/*.{php,js}",
         "./shipping_company/**/*.{php,js}",
     ],
     theme: {
