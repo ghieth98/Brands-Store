@@ -55,7 +55,9 @@ if ($products_in_cart) {
     // Calculate the subtotal
     foreach ($products as $product) {
         $subtotal += (float)$product['price'] * (int)$products_in_cart[$product['product_id']];
-        $new_tax = $subtotal * $tax;
+        $merchant_fees = $product['fees'];
+        $shipping_fees = $product['shipping_fees'];
+        $new_tax = $shipping_fees + $merchant_fees;
         $total = $subtotal + $new_tax;
 
     }

@@ -225,8 +225,12 @@ include "cart_functions.php";
                 </div>
 
                 <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 uppercase">
-                    <p>SAR <?php echo $new_tax ?></p>
-                    <p>مصاريف الشحن</p>
+                    <p>SAR <?php echo $merchant_fees ?></p>
+                    <p>مصاريف شركة الشحن</p>
+                </div>
+                <div class="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 uppercase">
+                    <p>SAR <?php echo $shipping_fees ?></p>
+                    <p>مصاريف شحن التاجر</p>
                 </div>
 
                 <div class="flex justify-between text-gray-800 font-medium py-3 uppercase">

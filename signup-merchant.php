@@ -147,6 +147,7 @@ if (isset($_POST['submit'])) {
     $confirm_password = base64_encode($_POST['confirm_password']);
     $phone = $_POST['phone'];
     $commercial_register = $_POST['record'];
+    $commercial_register_link = $_POST['record_link'];
 //Query merchant table for email
     $email_query = $con->query("SELECT * FROM merchant WHERE email='$email'");
     $merchants_emails = $email_query->fetchAll();
@@ -188,9 +189,9 @@ if (isset($_POST['submit'])) {
                                         </button>
                                      </div>';
     } elseif ($emails_count > 0) {
-//Check if email is already in user table
-        foreach ($users_emails as $user_email) {
-            if ($user_email['email'] == $email) {
+//Check if email is already in merchant table
+        foreach ($merchants_emails as $merchant_email) {
+            if ($merchant_email['email'] == $email) {
                 echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
                                         <div class="ml-3 text-xl font-medium">
 هذا البريد الإلكتروني موجود مسبقا!                                                
@@ -206,48 +207,10 @@ if (isset($_POST['submit'])) {
             }
 
         }
-    } elseif (strlen($password) <= 8) {
-        echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-كلمة السر يجب ان تكون اكثر من 8 حروف!                                                
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-
-    } elseif (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).*$/', $password)) {
-        echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-يجب أن تحتوي كلمة المرور على حرف واحد على الأقل، رقم واحد على الأقل، ورمز واحد على الأقل!                                                
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-
     } elseif ($password !== $confirm_password) {
         echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
                                         <div class="ml-3 text-xl font-medium">
 كلمة السر غير متطابقة!                                                
-                                        </div>
-                                        <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
-                                            <span class="sr-only">اغلاق</span>
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                        </button>
-                                     </div>';
-    } elseif (!preg_match('/^05\d{8}$/', $phone)) {
-        echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-red-500 " role="alert">
-                                        <div class="ml-3 text-xl font-medium">
-رقم الهاتف غير مسموح!                                                
                                         </div>
                                         <button type="button" class="mr-auto -mx-1.5 -my-1.5 bg-red-500 text-white rounded-lg focus:ring-2 focus:ring-red-500 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
                                             <span class="sr-only">اغلاق</span>
@@ -282,7 +245,7 @@ if (isset($_POST['submit'])) {
                 $upload_path = 'assets/uploads/' . $logo_name;
                 move_uploaded_file($_FILES['logo']['tmp_name'], $upload_path);
                 //Insert into merchant database
-                $sql = "INSERT INTO merchant (name, email, password, phone, commercial_register, logo) VALUES ('$name', '$email', '$password', '$phone', '$commercial_register','$logo_name')";
+                $sql = "INSERT INTO merchant (name, email, password, phone, commercial_register, commercial_register_link, logo) VALUES ('$name', '$email', '$password', '$phone', '$commercial_register', '$commercial_register_link','$logo_name')";
                 $result = $con->exec($sql);
                 echo '<div id="alert-2" dir="rtl" class="flex items-center p-4 m-4 text-white rounded-lg bg-green-500 " role="alert">
                                         <div class="ml-3 text-xl font-medium">
@@ -378,6 +341,14 @@ if (isset($_POST['submit'])) {
                                class="bg-gray-50 text-right border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5   "
                                required="">
                     </div>
+                    <div class="flex flex-col items-end">
+                        <label for="record" class="block mb-2 text-sm font-medium text-gray-900 ">السجل التجاري (لينك
+                            وثيقة العمل الحر)</label>
+                        <input type="url" name="record_link" id="record_link"
+                               class="bg-gray-50 text-right border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5   "
+                               required="">
+                    </div>
+
 
                     <div class="mt-2">
                         <button type="submit" name="submit"

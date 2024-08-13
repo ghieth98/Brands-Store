@@ -1,8 +1,8 @@
 <?php
 ob_start();
 session_start();
-if (isset($_SESSION['customer_id'])) {
-    $customer_id = $_SESSION['customer_id'];
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
 }
 if (isset($_SESSION['merchant_id'])) {
 
@@ -22,7 +22,7 @@ $categories = $con->query("SELECT * FROM category");
 $query = $con->prepare("SELECT * FROM product JOIN merchant ON product.merchant_id = merchant.merchant_id  WHERE  product_id='$product_id'");
 $query->execute();
 $product = $query->fetch();
-$comments = $con->query("SELECT * FROM comment LEFT JOIN brands.customer u on comment.customer_id = u.customer_id WHERE product_id='$product_id'");
+$comments = $con->query("SELECT * FROM comment LEFT JOIN brands.user u on comment.user_id = u.user_id WHERE product_id='$product_id'");
 $comment_count = $comments->rowCount();
 
 $message = isset($_GET['message']);
@@ -50,9 +50,9 @@ $message = isset($_GET['message']);
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
         <div class="flex flex-col md:flex-row items-center">
-            <?php if (isset($customer_id)): ?>
+            <?php if (isset($user_id)): ?>
                 <div class="md:ml-4 mt-3 md:mt-0">
-                    <a href="../customers/profile.php">
+                    <a href="../users/profile.php">
                         <img src="../assets/images/profile-user.png" alt="profile image"
                              class="-mt-px w-5 h-5 text-gray-800">
                     </a>
@@ -124,7 +124,7 @@ $message = isset($_GET['message']);
         <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
             <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
 
-                <?php if (isset($customer_id) || isset($merchant_id) || isset($admin_id) || isset($shipping_company_id)): ?>
+                <?php if (isset($user_id) || isset($merchant_id) || isset($admin_id) || isset($shipping_company_id)): ?>
                     <li>
                         <a href="../logout.php"
                            class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل
@@ -343,13 +343,13 @@ $message = isset($_GET['message']);
     <?php
     if (isset($_POST['comment'])) {
         $review = $_POST['review'];
-        if (empty($customer_id)) {
+        if (empty($user_id)) {
             $warning_msg[] = 'برجاء تسجيل الدخول لأضافه تعليق';
         } elseif (empty($_POST['rating'])) {
             $warning_msg[] = 'برجاء اضافة تقييم';
         } else {
             $stars = $_POST['rating'];
-            $sql = "INSERT INTO comment (product_id, customer_id, comment, stars, date) VALUES ('$product_id', '$customer_id', '$review', '$stars', NOW())";
+            $sql = "INSERT INTO comment (product_id, user_id, comment, stars, date) VALUES ('$product_id', '$user_id', '$review', '$stars', NOW())";
             $result = $con->exec($sql);
             header("Refresh:2");
             $success_msg[] = 'تم اضافة التعليق';
@@ -363,7 +363,7 @@ $message = isset($_GET['message']);
             <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">التعليقات
                 (<?php echo $comment_count ?>)</h2>
         </div>
-        <?php if (empty($customer_id)): ?>
+        <?php if (empty($user_id)): ?>
         <?php else: ?>
             <form class="mb-6" method="post">
 
