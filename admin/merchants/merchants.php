@@ -5,7 +5,7 @@ if (!(isset($_SESSION['email']))) {
 }
 ?>
 <!doctype html>
-<html lang="ar"">
+<html lang="ar" x-data="data()">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -41,8 +41,7 @@ if (!(isset($_SESSION['email']))) {
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
                     <li>
                         <a href="../../logout.php"
-                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل
-                            الخروج</a>
+                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل الخروج</a>
                     </li>
                     <li>
                         <a href="../shipping_companies.php"
@@ -83,17 +82,24 @@ if (!(isset($_SESSION['email']))) {
     <!--Sellers Content-->
 
     <div class="flex flex-col flex-1 w-full">
+
         <div class="flex flex-col flex-1 w-full">
+
+
             <main class="h-full pb-16 overflow-y-auto">
                 <div class="container grid px-6 mx-auto">
                     <div class="flex flex-col items-end mr-5">
-                        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+
+                        <h2
+                                class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+                        >
                             التجار
                         </h2>
                     </div>
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="flex flex-col items-end pr-5 pt-3  bg-white">
+
 
                             <label for="merchantSearch" class="sr-only">Search</label>
                             <div class="relative mb-3 text-right">
@@ -109,7 +115,9 @@ if (!(isset($_SESSION['email']))) {
                                        placeholder="... ابحث هنا">
                             </div>
 
+
                         </div>
+
 
                         <table class="w-full  text-sm text-right  text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -144,18 +152,9 @@ if (!(isset($_SESSION['email']))) {
                                 ?>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-4 p-4"></td>
-                                    <td class="">
-                                        <div class="flex justify-end space-x-4 text-sm">
-                                            <a href="edit_merchant.php?merchant_id=<?php echo $merchant['merchant_id'] ?>"
-                                               class="flex items-center justify-between px-3 py-2 text-sm font-medium leading-5 bg-viridian-green-500 border border-viridian-green-500 text-white font-medium
-                                                         rounded-md hover:bg-transparent hover:text-viridian-green-500"
-                                               aria-label="edit">
-                                                اضافة لينك السجل التجاري
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class=""></td>
                                     <td class="px-6 py-4 font-bold hover:text-green-500">
-                                        <a href="<?php echo $merchant['commercial_register_link'] ?>" target="_blank">
+                                        <a href="<?php echo $merchant['commercial_register_link'] ?>">
                                             <?php
                                             echo $merchant['commercial_register']
                                             ?>
@@ -164,8 +163,7 @@ if (!(isset($_SESSION['email']))) {
                                     </td>
                                     <td class="text-center py-4">
                                         <div class="flex flex-col items-end">
-                                            <img src="../../assets/uploads/<?php echo $merchant['logo'] ?>"
-                                                 alt="product image"
+                                            <img src="../../assets/uploads/<?php echo $merchant['logo'] ?>" alt="product image"
                                                  class=" w-20 rounded">
                                         </div>
                                     </td>

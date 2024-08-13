@@ -41,8 +41,7 @@ if (!(isset($_SESSION['email']))) {
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
                     <li>
                         <a href="../../logout.php"
-                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل
-                            الخروج</a>
+                           class="block py-2 pl-3 pr-4 text-white rounded hover:bg-viridian-green-500 md:hover:bg-transparent md:hover:text-viridian-green-500 md:p-0">تسجيل الخروج</a>
                     </li>
                     <li>
                         <a href="../shipping_companies.php"
@@ -103,8 +102,11 @@ if (!(isset($_SESSION['email']))) {
                         <table class="w-full  text-sm text-right  text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="p-4"></th>
-                                <th scope="col" class="px-6 py-3 "></th>
+                                <th scope="col" class="p-4">
+                                </th>
+                                <th scope="col" class="px-6 py-3 ">
+
+                                </th>
                                 <th scope="col" class="px-6 py-3">
                                     السجل التجاري (رقم وثيقة العمل الحر)
                                 </th>
@@ -126,7 +128,8 @@ if (!(isset($_SESSION['email']))) {
                             <?php
                             include "../../connection.php";
                             $merchants = $con->query("SELECT * FROM merchant WHERE status=0");
-                            foreach ($merchants as $merchant) { ?>
+                            foreach ($merchants as $merchant) {
+                                ?>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-4 p-4"></td>
                                     <td class="">
@@ -135,9 +138,11 @@ if (!(isset($_SESSION['email']))) {
                                             <a href="delete_merchant.php?merchant_id=<?php echo $merchant['merchant_id'] ?>"
                                                class="flex items-center justify-between px-3 py-2 text-sm font-medium leading-5 bg-viridian-green-500 border border-viridian-green-500 text-white font-medium
                                                         rounded-md hover:bg-transparent hover:text-viridian-green-500"
-                                               aria-label="Delete">
+                                               aria-label="Delete"
+                                            >
                                                 رفض
                                             </a>
+
 
                                             <a href="accept_merchant.php?merchant_id=<?php echo $merchant['merchant_id'] ?>"
                                                class="flex items-center justify-between px-3 py-2 text-sm font-medium leading-5 bg-viridian-green-500 border border-viridian-green-500 text-white font-medium
@@ -146,11 +151,15 @@ if (!(isset($_SESSION['email']))) {
                                                 قبول
                                             </a>
 
+
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 font-bold hover:text-green-500">
                                         <a href="<?php echo $merchant['commercial_register_link'] ?>">
-                                            <?php echo $merchant['commercial_register'] ?>
+                                            <?php
+                                            echo $merchant['commercial_register']
+                                            ?>
+
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 font-bold">
@@ -177,16 +186,39 @@ if (!(isset($_SESSION['email']))) {
                                     </td>
                                 </tr>
                             <?php } ?>
+
+
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </main>
         </div>
+
+
         <!--End Sellers Content-->
     </div>
 </div>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+<!--<script>-->
+<!--    $(document).ready(function(){-->
+<!--        $('#merchantSearch').on("keyup", function(){-->
+<!--            var merchantSearch = $(this).val();-->
+<!--            $.ajax({-->
+<!--                method:'POST',-->
+<!--                url:'merchant-search.php',-->
+<!--                data:{name:merchantSearch},-->
+<!--                success:function(response)-->
+<!--                {-->
+<!--                    $("#showData").html(response);-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </body>
 </html>
 

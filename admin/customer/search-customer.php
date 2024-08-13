@@ -2,19 +2,19 @@
 include "../../connection.php";
 $name = $_POST['name'];
 
-$sql = "SELECT * FROM customer WHERE name LIKE '$name%' AND  block=0";
+$sql = "SELECT * FROM user WHERE name LIKE '$name%' AND  block=0";
 $query = $con->query($sql);
 
 $data = '';
 if ($query->rowCount() > 0) {
     while ($customer_search = $query->fetch()) {
-        $customer_id = $customer_search['customer_id'];
+        $user_id = $customer_search['user_id'];
         $data .=
             '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="w-4 p-4"></td>
                                 <th class="px-6 pr-8 mr-5 py-4 font-bold text-green-500  hover:text-red-800 dark:text-white">
 
-                                      <a   href="block_user.php?customer_id=' . $customer_id . '" 
+                                      <a   href="block_user.php?user_id=' . $user_id . '" 
                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-viridian-green-800 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                        aria-label="Block">
                                         <svg class="h-6 w-6 hover:text-red-800" fill="none" stroke="currentColor"

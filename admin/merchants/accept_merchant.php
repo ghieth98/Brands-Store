@@ -139,8 +139,11 @@ if (!(isset($_SESSION['email']))) {
                                             </svg>
                                         </button>
                                      </div>';
+
                 }
+
                 ?>
+
                 <main class="h-full pb-16 overflow-y-auto">
                     <div class="container grid px-6 mx-auto">
                         <div class="flex flex-col items-end mr-5">
@@ -154,12 +157,15 @@ if (!(isset($_SESSION['email']))) {
 
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
 
+
                             <table class="w-full  text-sm text-right  text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="p-4">
                                     </th>
-                                    <th scope="col" class="px-6 py-3 "></th>
+                                    <th scope="col" class="px-6 py-3 ">
+
+                                    </th>
                                     <th scope="col" class="px-6 py-3">
                                         السجل التجاري (رقم وثيقة العمل الحر)
                                     </th>
@@ -189,7 +195,8 @@ if (!(isset($_SESSION['email']))) {
                                                 <a href="delete_merchant.php?merchant_id=<?php echo $merchant['merchant_id'] ?>"
                                                    class="flex items-center justify-between px-3 py-2 text-sm font-medium leading-5 bg-viridian-green-500 border border-viridian-green-500 text-white font-medium
                                                         rounded-md hover:bg-transparent hover:text-viridian-green-500"
-                                                   aria-label="Delete">
+                                                   aria-label="Delete"
+                                                >
                                                     رفض
                                                 </a>
 
@@ -208,6 +215,7 @@ if (!(isset($_SESSION['email']))) {
                                                 <?php
                                                 echo $merchant['commercial_register']
                                                 ?>
+
                                             </a>
                                         </td>
                                         <td class="px-6 py-4 font-bold">

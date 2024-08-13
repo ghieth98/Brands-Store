@@ -81,8 +81,7 @@ if (!(isset($_SESSION['email']))) {
         require "../mail.php";
         if (isset($_POST['submit'])) {
             $email = $_POST['email'];
-            $password = base64_encode($_POST['password']);
-            $confirm_password = base64_encode($_POST['confirm_password']);
+            $shipping_fees = $_POST['shipping_fees'];
             $name = $_POST['name'];
             $phone = $_POST['phone'];
             $commercial_register = $_POST['commercial_register'];
@@ -111,7 +110,7 @@ if (!(isset($_SESSION['email']))) {
                 }
             } else {
 
-                $sql = "INSERT INTO shipping_company (name, email, phone,password, commercial_register) VALUES ('$name', '$email', '$phone','$password', '$commercial_register')";
+                $sql = "INSERT INTO shipping_company (name, email,shipping_fees, phone, commercial_register) VALUES ('$name', '$email','$shipping_fees', '$phone', '$commercial_register')";
 
                 $result = $con->exec($sql);
 
@@ -129,7 +128,6 @@ if (!(isset($_SESSION['email']))) {
                 </h3>
                 <h4>
                     " . $_POST['email'] . "  <br>
-                    " . $_POST['password'] . "
                 </h4>
                 <br><br>
                 <p>مع أطيب التحيات, </p>
@@ -184,27 +182,20 @@ if (!(isset($_SESSION['email']))) {
                                    required="">
                         </div>
                         <div class="flex flex-col items-end">
-
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 items-end">الرقم
-                                السري</label>
-                            <input type="password" name="password" id="password"
-                                   class="bg-gray-50 text-right border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5   "
-                                   required="">
-                        </div>
-                        <div class="flex flex-col items-end">
-
-                            <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 items-end">تأكيد الرقم السري</label>
-                            <input type="password" name="confirm_password" id="confirm_password"
-                                   class="bg-gray-50 text-right border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5   "
-                                   required="">
-                        </div>
-                        <div class="flex flex-col items-end">
                             <label for="name"
                                    class="block mb-2 text-sm font-medium text-gray-900 ">الاسم</label>
                             <input type="text" name="name" id="name"
                                    class="bg-gray-50 text-right border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5   "
                                    required="">
                         </div>
+                        <div class="flex flex-col items-end">
+
+                            <label for="shipping_fees" class="block mb-2 text-sm font-medium text-gray-900 items-end">رسوم الشحن</label>
+                            <input type="number" name="shipping_fees" id="shipping_fees"
+                                   class="bg-gray-50 text-right border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5   "
+                                   required="">
+                        </div>
+
                         <div class="flex flex-col items-end">
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">رقم
                                 الهاتف</label>

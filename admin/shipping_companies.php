@@ -134,6 +134,9 @@ if (!(isset($_SESSION['email']))) {
                             <th scope="col" class="px-6 py-3">
                                 السجل التجاري
                             </th>
+                            <th scope="col" class="px-6 py-3">
+                                رسوم الشحن
+                            </th>
 
                             <th scope="col" class="px-6 py-3">
                                 رقم الهاتف
@@ -164,6 +167,11 @@ if (!(isset($_SESSION['email']))) {
                                     ?>
                                 </td>
 
+                                <td class="px-6 py-4 font-bold">
+                                    <?php
+                                    echo $shipping_company['shipping_fees']
+                                    ?>  SAR
+                                </td>
                                 <td class="px-6 py-4 font-bold">
                                     <?php
                                     echo $shipping_company['phone']

@@ -145,14 +145,14 @@ if (!(isset($_SESSION['email']))) {
                         <tbody id="showData">
                         <?php
                         include "../../connection.php";
-                        $customers = $con->query("SELECT * FROM customer WHERE block=0");
+                        $customers = $con->query("SELECT * FROM user WHERE block=0");
                         foreach ($customers as $customer) {
                             ?>
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="w-4 p-4"></td>
                                 <th class="px-6 pr-8 mr-5 py-4 font-bold text-green-500  hover:text-red-800 dark:text-white">
 
-                                    <a href="block_user.php?customer_id=<?php echo $customer['customer_id'] ?>"
+                                    <a href="block_user.php?user_id=<?php echo $customer['user_id'] ?>"
                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-viridian-green-800 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                        aria-label="Block">
                                         <svg class="h-6 w-6 hover:text-red-800" fill="none" stroke="currentColor"

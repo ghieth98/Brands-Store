@@ -18,6 +18,10 @@ if ($query->rowCount() > 0) {
                                 <td class="px-6 py-4 font-bold">' . $company_search['commercial_register'] . '</td>
 
                                 <td class="px-6 py-4 font-bold">' .
+            $company_search['shipping_fees'] .
+
+            '  </td>       
+                                                        <td class="px-6 py-4 font-bold">' .
             $company_search['phone'] .
 
             '  </td>
